@@ -1,6 +1,5 @@
 import { Footer } from '@/components';
-import { login } from '@/services/ant-design-pro/api';
-import { getFakeCaptcha } from '@/services/ant-design-pro/login';
+import {login, register} from '@/services/ant-design-pro/api';
 import {
   AlipayCircleOutlined,
   LockOutlined,
@@ -70,60 +69,39 @@ const Lang = () => {
   const { styles } = useStyles();
   return;
 };
-const LoginMessage: React.FC<{
-  content: string;
-}> = ({ content }) => {
-  return (
-    <Alert
-      style={{
-        marginBottom: 24,
-      }}
-      message={content}
-      type="error"
-      showIcon
-    />
-  );
-};
-const Login: React.FC = () => {
-  const [userLoginState, setUserLoginState] = useState<API.LoginResult>({});
+const Register: React.FC = () => {
   const [type, setType] = useState<string>('account');
-  const { initialState, setInitialState } = useModel('@@initialState');
   const { styles } = useStyles();
-  const fetchUserInfo = async () => {
-    const userInfo = await initialState?.fetchUserInfo?.();
-    if (userInfo) {
-      flushSync(() => {
-        setInitialState((s) => ({
-          ...s,
-          currentUser: userInfo,
-        }));
-      });
+
+  // submit form
+  const handleSubmit = async (values: API.RegisterParams) => {
+    const { userPassword, checkPassword} = values;
+    // Verify
+    if (userPassword !== checkPassword) {
+      message.error("Two passwords don't match");
+      return;
     }
-  };
-  const handleSubmit = async (values: API.LoginParams) => {
     try {
-      // 登录
-      const user = await login({
-        ...values,
-        type,
-      });
-      if (user) {
-        const defaultLoginSuccessMessage = 'Logged in successfully!';
+      // Register
+      // Double check redirect
+      const id = await register(values);
+      if (id > 0) {
+        const defaultLoginSuccessMessage = 'Registered successfully!';
         message.success(defaultLoginSuccessMessage);
-        await fetchUserInfo();
+
         const urlParams = new URL(window.location.href).searchParams;
-        history.push(urlParams.get('redirect') || '/');
+        history.push('/user/login?redirect=' + urlParams);
         return;
       }
-      // 如果失败去设置用户错误信息
-      setUserLoginState(user);
+      else {
+        throw new Error(`register error id = ${id}`);
+      }
     } catch (error) {
       const defaultLoginFailureMessage = "Login failed, please try again!";
       console.log(error);
       message.error(defaultLoginFailureMessage);
     }
   };
-  const { status, type: loginType } = userLoginState;
   return (
     <div className={styles.container}>
       <Helmet>
@@ -141,8 +119,8 @@ const Login: React.FC = () => {
         <LoginForm
           submitter={{
             searchConfig: {
-              submitText: 'Log in'
-            }
+              submitText: 'Register'
+              }
           }}
           contentStyle={{
             minWidth: 280,
@@ -155,7 +133,7 @@ const Login: React.FC = () => {
             autoLogin: true,
           }}
           onFinish={async (values) => {
-            await handleSubmit(values as API.LoginParams);
+            await handleSubmit(values as API.RegisterParams);
           }}
         >
           <Tabs
@@ -165,14 +143,10 @@ const Login: React.FC = () => {
             items={[
               {
                 key: 'account',
-                label: 'Account Password Login',
+                label: 'Account Password Register',
               },
             ]}
           />
-
-          {status === 'error' && loginType === 'account' && (
-            <LoginMessage content={'Wrong account and password'} />
-          )}
           {type === 'account' && (
             <>
               <ProFormText
@@ -208,29 +182,31 @@ const Login: React.FC = () => {
                   },
                 ]}
               />
+              <ProFormText.Password
+                name="checkPassword"
+                fieldProps={{
+                  size: 'large',
+                  prefix: <LockOutlined />,
+                }}
+                placeholder="Please enter your password again"
+                rules={[
+                  {
+                    required: true,
+                    message: 'Checked password is a required field!',
+                  },
+                  {
+                    min: 8,
+                    type: 'string',
+                    message: 'Length cannot be less than 8!'
+                  },
+                ]}
+              />
             </>
           )}
-          <div
-            style={{
-              marginBottom: 24,
-            }}
-          >
-            <ProFormCheckbox noStyle name="autoLogin">
-              Auto Login
-            </ProFormCheckbox>
-            <a
-              style={{
-                float: 'right',
-              }}
-              href="mailto:aaronbychen@gmail.com"
-            >
-              Forgot your password?
-            </a>
-          </div>
         </LoginForm>
       </div>
       <Footer />
     </div>
   );
 };
-export default Login;
+export default Register;
