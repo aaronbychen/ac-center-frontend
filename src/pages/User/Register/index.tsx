@@ -83,7 +83,7 @@ const Register: React.FC = () => {
     }
     try {
       // Register
-      // Double check redirect
+      // TODO Double check redirect
       const id = await register(values);
       if (id > 0) {
         const defaultLoginSuccessMessage = 'Registered successfully!';

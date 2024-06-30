@@ -15,8 +15,8 @@ import {
   ProFormCheckbox,
   ProFormText,
 } from '@ant-design/pro-components';
-import { Helmet, history, useModel } from '@umijs/max';
-import { Alert, Tabs, message } from 'antd';
+import {Helmet, history, Link, useModel} from '@umijs/max';
+import {Alert, Tabs, message, Button, Space, Divider} from 'antd';
 import { createStyles } from 'antd-style';
 import React, { useState } from 'react';
 import { flushSync } from 'react-dom';
@@ -148,7 +148,7 @@ const Login: React.FC = () => {
             minWidth: 280,
             maxWidth: '75vw',
           }}
-          logo={<img alt="logo" src="/logo.svg" />}
+          logo={<img alt="logo" src="/logo.svg"/>}
           title="AC Center"
           subTitle={'AC will find a job in the near future'}
           initialValues={{
@@ -165,13 +165,13 @@ const Login: React.FC = () => {
             items={[
               {
                 key: 'account',
-                label: 'Account Password Login',
+                label: 'Account Password Log in',
               },
             ]}
           />
 
           {status === 'error' && loginType === 'account' && (
-            <LoginMessage content={'Wrong account and password'} />
+            <LoginMessage content={'Wrong account and password'}/>
           )}
           {type === 'account' && (
             <>
@@ -179,7 +179,7 @@ const Login: React.FC = () => {
                 name="userAccount"
                 fieldProps={{
                   size: 'large',
-                  prefix: <UserOutlined />,
+                  prefix: <UserOutlined/>,
                 }}
                 placeholder="Please enter your account"
                 rules={[
@@ -193,7 +193,7 @@ const Login: React.FC = () => {
                 name="userPassword"
                 fieldProps={{
                   size: 'large',
-                  prefix: <LockOutlined />,
+                  prefix: <LockOutlined/>,
                 }}
                 placeholder="Please enter your password"
                 rules={[
@@ -215,21 +215,25 @@ const Login: React.FC = () => {
               marginBottom: 24,
             }}
           >
-            <ProFormCheckbox noStyle name="autoLogin">
-              Auto Login
-            </ProFormCheckbox>
-            <a
-              style={{
-                float: 'right',
-              }}
-              href="mailto:aaronbychen@gmail.com"
-            >
-              Forgot your password?
-            </a>
+
+            <Space split={<Divider type="vertical"/>} align="center">
+              <ProFormCheckbox noStyle name="autoLogin">
+                Remember me
+              </ProFormCheckbox>
+              <Link to="/user/register">Register</Link>
+              <a
+                style={{
+                  float: 'right',
+                }}
+                href="mailto:aaronbychen@gmail.com"
+              >
+                Forgot pwd?
+              </a>
+            </Space>
           </div>
         </LoginForm>
       </div>
-      <Footer />
+      <Footer/>
     </div>
   );
 };
