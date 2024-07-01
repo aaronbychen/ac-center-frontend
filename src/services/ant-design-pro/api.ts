@@ -4,9 +4,7 @@ import { request } from '@umijs/max';
 
 /** 获取当前的用户 GET /api/user/current */
 export async function currentUser(options?: { [key: string]: any }) {
-  return request<{
-    data: API.CurrentUser;
-  }>('/api/user/current', {
+  return request<API.CurrentUser>('/api/user/current', {
     method: 'GET',
     ...(options || {}),
   });
