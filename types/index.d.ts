@@ -12,7 +12,7 @@ export namespace API {
     data: {
       name: string;
       avatar: string;
-      userid: string;
+      userid: string;v
       email: string;
       signature: string;
       title: string;
