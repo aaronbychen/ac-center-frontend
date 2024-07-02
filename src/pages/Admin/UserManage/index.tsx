@@ -73,7 +73,7 @@ const columns: ProColumns<API.CurrentUser>[] = [
       >
         Edit
       </a>,
-      <a href={record.url} target="_blank" rel="noopener noreferrer" key="view">
+      <a href={record.avatarUrl} target="_blank" rel="noopener noreferrer" key="view">
         View
       </a>,
       <TableDropdown
