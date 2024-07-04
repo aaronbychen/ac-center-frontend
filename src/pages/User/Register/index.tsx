@@ -20,6 +20,7 @@ import { createStyles } from 'antd-style';
 import React, { useState } from 'react';
 import { flushSync } from 'react-dom';
 import Settings from '../../../../config/defaultSettings';
+
 const useStyles = createStyles(({ token }) => {
   return {
     action: {
@@ -84,8 +85,8 @@ const Register: React.FC = () => {
     try {
       // Register
       // TODO Double check redirect
-      const id = await register(values);
-      if (id > 0) {
+      const res = await register(values);
+      if (res.code === 0 && res.data > 0) {
         const defaultLoginSuccessMessage = 'Registered successfully!';
         message.success(defaultLoginSuccessMessage);
 
@@ -94,12 +95,12 @@ const Register: React.FC = () => {
         return;
       }
       else {
-        throw new Error(`register error id = ${id}`);
+        throw new Error(res.description);
       }
-    } catch (error) {
+    } catch (error : any) {
       const defaultLoginFailureMessage = "Login failed, please try again!";
       console.log(error);
-      message.error(defaultLoginFailureMessage);
+      message.error(error.message ?? defaultLoginFailureMessage);
     }
   };
   return (
