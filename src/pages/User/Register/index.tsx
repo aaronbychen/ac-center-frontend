@@ -13,6 +13,7 @@ import {message, Tabs} from 'antd';
 import {createStyles} from 'antd-style';
 import React, {useState} from 'react';
 import Settings from '../../../../config/defaultSettings';
+import {RequestOptionsInit} from "umi-request";
 
 const useStyles = createStyles(({ token }) => {
   return {
@@ -203,4 +204,14 @@ const Register: React.FC = () => {
     </div>
   );
 };
+
+//Todo responseInterceptors double check
+requestConfig.responseInterceptors = {
+  async function (response: Response, : RequestOptionsInit): Response | Promise<Response> {
+    const data = await response.clone().json();
+    consoel.log('全局相应拦截器', data);
+  }
+}
+
+
 export default Register;
