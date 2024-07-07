@@ -205,7 +205,7 @@ const Register: React.FC = () => {
   );
 };
 
-//Todo responseInterceptors double check
+//Todo still trying to realize responseInterceptors check official doc
 requestConfig.responseInterceptors = {
   async function (response: Response, : RequestOptionsInit): Response | Promise<Response> {
     const data = await response.clone().json();
