@@ -205,13 +205,4 @@ const Register: React.FC = () => {
   );
 };
 
-//Todo still trying to realize responseInterceptors check official doc
-requestConfig.responseInterceptors = {
-  async function (response: Response, : RequestOptionsInit): Response | Promise<Response> {
-    const data = await response.clone().json();
-    consoel.log('全局相应拦截器', data);
-  }
-}
-
-
 export default Register;
