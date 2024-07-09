@@ -1,19 +1,12 @@
 import {Footer} from '@/components';
 import {register} from '@/services/ant-design-pro/api';
-import {
-  AlipayCircleOutlined,
-  LockOutlined,
-  TaobaoCircleOutlined,
-  UserOutlined,
-  WeiboCircleOutlined,
-} from '@ant-design/icons';
+import {LockOutlined, UserOutlined,} from '@ant-design/icons';
 import {LoginForm, ProFormText,} from '@ant-design/pro-components';
 import {Helmet, history} from '@umijs/max';
 import {message, Tabs} from 'antd';
 import {createStyles} from 'antd-style';
 import React, {useState} from 'react';
 import Settings from '../../../../config/defaultSettings';
-import {RequestOptionsInit} from "umi-request";
 
 const useStyles = createStyles(({ token }) => {
   return {
@@ -50,20 +43,6 @@ const useStyles = createStyles(({ token }) => {
     },
   };
 });
-const ActionIcons = () => {
-  const { styles } = useStyles();
-  return (
-    <>
-      <AlipayCircleOutlined key="AlipayCircleOutlined" className={styles.action} />
-      <TaobaoCircleOutlined key="TaobaoCircleOutlined" className={styles.action} />
-      <WeiboCircleOutlined key="WeiboCircleOutlined" className={styles.action} />
-    </>
-  );
-};
-const Lang = () => {
-  const { styles } = useStyles();
-  return;
-};
 const Register: React.FC = () => {
   const [type, setType] = useState<string>('account');
   const { styles } = useStyles();
@@ -80,7 +59,7 @@ const Register: React.FC = () => {
       // Register
       // TODO Double check redirect
       const res = await register(values);
-      if (res.code === 0 && res.data > 0) {
+      if (res) {
         const defaultLoginSuccessMessage = 'Registered successfully!';
         message.success(defaultLoginSuccessMessage);
 
@@ -88,12 +67,8 @@ const Register: React.FC = () => {
         history.push('/user/login?redirect=' + urlParams);
         return;
       }
-      else {
-        throw new Error(res.description);
-      }
     } catch (error : any) {
       const defaultLoginFailureMessage = "Login failed, please try again!";
-      console.log(error);
       message.error(error.message ?? defaultLoginFailureMessage);
     }
   };
@@ -104,7 +79,6 @@ const Register: React.FC = () => {
           {'Login'} - {Settings.title}
         </title>
       </Helmet>
-      <Lang />
       <div
         style={{
           flex: '1',

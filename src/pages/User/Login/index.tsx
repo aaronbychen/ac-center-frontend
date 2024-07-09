@@ -1,26 +1,14 @@
-import { Footer } from '@/components';
-import { login } from '@/services/ant-design-pro/api';
-import { getFakeCaptcha } from '@/services/ant-design-pro/login';
-import {
-  AlipayCircleOutlined,
-  LockOutlined,
-  MobileOutlined,
-  TaobaoCircleOutlined,
-  UserOutlined,
-  WeiboCircleOutlined,
-} from '@ant-design/icons';
-import {
-  LoginForm,
-  ProFormCaptcha,
-  ProFormCheckbox,
-  ProFormText,
-} from '@ant-design/pro-components';
+import {Footer} from '@/components';
+import {login} from '@/services/ant-design-pro/api';
+import {LockOutlined, UserOutlined,} from '@ant-design/icons';
+import {LoginForm, ProFormCheckbox, ProFormText,} from '@ant-design/pro-components';
 import {Helmet, history, Link, useModel} from '@umijs/max';
-import {Alert, Tabs, message, Button, Space, Divider} from 'antd';
-import { createStyles } from 'antd-style';
-import React, { useState } from 'react';
-import { flushSync } from 'react-dom';
+import {Alert, Divider, message, Space, Tabs} from 'antd';
+import {createStyles} from 'antd-style';
+import React, {useState} from 'react';
+import {flushSync} from 'react-dom';
 import Settings from '../../../../config/defaultSettings';
+
 const useStyles = createStyles(({ token }) => {
   return {
     action: {
@@ -56,20 +44,6 @@ const useStyles = createStyles(({ token }) => {
     },
   };
 });
-const ActionIcons = () => {
-  const { styles } = useStyles();
-  return (
-    <>
-      <AlipayCircleOutlined key="AlipayCircleOutlined" className={styles.action} />
-      <TaobaoCircleOutlined key="TaobaoCircleOutlined" className={styles.action} />
-      <WeiboCircleOutlined key="WeiboCircleOutlined" className={styles.action} />
-    </>
-  );
-};
-const Lang = () => {
-  const { styles } = useStyles();
-  return;
-};
 const LoginMessage: React.FC<{
   content: string;
 }> = ({ content }) => {
@@ -119,7 +93,6 @@ const Login: React.FC = () => {
       setUserLoginState(user);
     } catch (error) {
       const defaultLoginFailureMessage = "Login failed, please try again!";
-      console.log(error);
       message.error(defaultLoginFailureMessage);
     }
   };
@@ -131,7 +104,6 @@ const Login: React.FC = () => {
           {'Login'} - {Settings.title}
         </title>
       </Helmet>
-      <Lang />
       <div
         style={{
           flex: '1',
