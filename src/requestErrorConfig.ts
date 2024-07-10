@@ -14,6 +14,7 @@ interface ResponseStructure {
  */
 export const errorConfig: RequestConfig = {
   timeout: 1000000,
+  baseURL: process.env.NODE_ENV === 'production' ? 'http://user-backend.code-nav.cn' : undefined,
 
   // 请求拦截器
   requestInterceptors: [
