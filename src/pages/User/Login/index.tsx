@@ -58,6 +58,17 @@ const LoginMessage: React.FC<{
     />
   );
 };
+// TODO trying to fix bug: TypeError: Cannot read properties of null (reading 'status')
+// Login
+// .ant-design-pro/src/pages/User/Login/index.tsx:100
+//    97 |     message.error(defaultLoginFailureMessage);
+//    98 |   }
+//    99 | };
+// > 100 | const { status, type: loginType } = userLoginState;
+//       | ^  101 | return (
+//   102 |   <div className={styles.container}>
+//   103 |     <Helmet>
+// View compiled
 const Login: React.FC = () => {
   const [userLoginState, setUserLoginState] = useState<API.LoginResult>({});
   const [type, setType] = useState<string>('account');
