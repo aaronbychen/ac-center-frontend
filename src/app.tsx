@@ -35,12 +35,14 @@ export async function getInitialState(): Promise<{
   };
   // 如果是无需登录的页面，不执行
   if (NO_NEED_LOGIN_WHITE_LIST.includes(history.location.pathname)) {
+    // @ts-ignore
     return {
       fetchUserInfo,
       settings: defaultSettings as Partial<LayoutSettings>,
     };
   }
   const currentUser = await fetchUserInfo();
+  // @ts-ignore
   return {
     fetchUserInfo,
     currentUser,
@@ -95,11 +97,11 @@ export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) =
     ],
     links: isDev
       ? [
-          <Link key="openapi" to="/umi/plugin/openapi" target="_blank">
-            <LinkOutlined />
-            <span>OpenAPI 文档</span>
-          </Link>,
-        ]
+        <Link key="openapi" to="/umi/plugin/openapi" target="_blank">
+          <LinkOutlined />
+          <span>OpenAPI Doc</span>
+        </Link>,
+      ]
       : [],
     menuHeaderRender: undefined,
     // 自定义 403 页面
