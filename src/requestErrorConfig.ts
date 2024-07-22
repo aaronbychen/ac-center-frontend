@@ -13,7 +13,7 @@ interface ResponseStructure {
  * @doc https://umijs.org/docs/max/request#配置
  */
 export const errorConfig: RequestConfig = {
-  timeout: 1000000,
+  timeout: 5000,
   baseURL: process.env.NODE_ENV === 'production' ? 'http://user-backend.code-nav.cn' : undefined,
 
   // 请求拦截器
@@ -36,7 +36,8 @@ export const errorConfig: RequestConfig = {
       }
       if (data.code === 40100) {
         message.error('Please log in first');
-      } else {
+      }
+      else {
         message.error(data.description);
       }
       return data;
