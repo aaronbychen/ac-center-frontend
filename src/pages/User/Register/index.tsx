@@ -57,7 +57,6 @@ const Register: React.FC = () => {
     }
     try {
       // Register
-      // TODO Double check redirect
       const res = await register(values);
       if (res) {
         const defaultLoginSuccessMessage = 'Registered successfully!';
