@@ -126,7 +126,7 @@ const Welcome: React.FC = () => {
               width: '65%',
             }}
           >
-            <br/>AC Center is a completely free and open source user center, built using Ant Design framework and umi
+            <br/>AC Center is a completely free and open sourced user center, built using Ant Design framework and umi
             scaffolding in frontend, and SpringBoot framework in backend. Users can register, login, and logout, and
             administrators can add, delete, change, and check users.
             <br/>
